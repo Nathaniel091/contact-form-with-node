@@ -1,0 +1,7 @@
+### dotenv ###
+.env
+
+### Node ###
+
+# Dependency directories
+node_modules/
