@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 // console.log("MY_EMAIL_APP_PASSWORD1 => ", process.env.MY_EMAIL_APP_PASSWORD1)
 
 //Middleware
-app.use(express.static('public')); 
+app.use(express.static('public'));
 app.use(express.json());
 
 app.get('/', (req, res)=>{
