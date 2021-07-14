@@ -40,8 +40,9 @@ app.post('/', (req, res)=>{
 		service: 'gmail',
 		auth: {
 			// user: MY_EMAIL_ADDRESS1,
-			user: MY_EMAIL_ADDRESS1,
-			pass: MY_EMAIL_APP_PASSWORD1,
+			// pass: MY_EMAIL_APP_PASSWORD1,
+			user: 'nathanielsamuel091@gmail.com',
+			pass: 'ykykbghitplkbvvq',
 		},
 	});
 
@@ -74,7 +75,7 @@ app.post('/', (req, res)=>{
 			res.send('error');
 
 			app.get('/public/form-error-page.html', function(req, res) {
-				res.send(`========== AN ERROR OCCURRED! ========== <br> -----> ${error.response} <br><br><br> -----> Don't worry it's not your fault.`);
+				res.send(`========== AN ERROR OCCURRED! ========== <br> Error here -----> ${error} <br><br><br> -----> Don't worry it's not your fault.`);
 			});
 
 		}else {
