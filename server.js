@@ -74,12 +74,12 @@ app.post('/', (req, res)=>{
 			res.send('error');
 
 			app.get('/public/form-error-page.html', function(req, res) {
-				res.send(`ERROR! ⛌ => ${error.response}`);
+				res.send(`========== AN ERROR OCCURRED! ========== <br> -----> ${error.response} <br><br><br> -----> Don't worry it's not your fault.`);
 			});
 
 		}else {
-			console.log('==> Email sent: > info.response ' + info.response);
 			res.send('success');
+			console.log('==> Email was sent! ✔ : > info.response ' + info.response);
 		};
 	});
 });

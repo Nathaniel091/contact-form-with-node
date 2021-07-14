@@ -73,7 +73,7 @@ contactForm.addEventListener('submit', (event) => {
 
 			alert('Something went wrong. ⛌ \nDont worry its not your fault');
 
-			window.open('/public/errorpage.html', '_blank');
+			window.open('/public/form-error-page.html', '_blank');
 		}
 	}
 	xhr.send(JSON.stringify(formData));
