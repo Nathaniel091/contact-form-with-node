@@ -16,6 +16,8 @@ const app = express();
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 dotenv.config();
+// dotenv.config({ path: '/full/custom/path/to/your/env/vars' })
+
 
 const PORT = process.env.PORT || 5000;
 // console.log("MY_EMAIL_APP_PASSWORD1 => ", process.env.MY_EMAIL_APP_PASSWORD1)
@@ -29,7 +31,6 @@ app.get('/', (req, res)=>{
 }); 
 
 
-
 app.post('/', (req, res)=>{
 	console.log("req.body => ", req.body)
 
@@ -39,10 +40,8 @@ app.post('/', (req, res)=>{
 	const transporter = nodemailer.createTransport({
 		service: 'gmail',
 		auth: {
-			// user: MY_EMAIL_ADDRESS1,
-			// pass: MY_EMAIL_APP_PASSWORD1,
-			user: 'nathanielsamuel091@gmail.com',
-			pass: 'ykykbghitplkbvvq',
+			user: MY_EMAIL_ADDRESS1,
+			pass: MY_EMAIL_APP_PASSWORD1,
 		},
 	});
 
