@@ -31,7 +31,7 @@ app.get('/', (req, res)=>{
 
 
 app.post('/', (req, res)=>{
-	// console.log("req.body => ", req.body)
+	console.log("req.body => ", req.body)
 
 	const MY_EMAIL_ADDRESS1 = process.env.MY_EMAIL_ADDRESS1;
 	const MY_EMAIL_APP_PASSWORD1 = process.env.MY_EMAIL_APP_PASSWORD1;
@@ -69,7 +69,7 @@ app.post('/', (req, res)=>{
 
 	transporter.sendMail(mailOptions, (error, info) => {
 		if(error) {
-			// console.log("nodemailer error => ", error)
+			console.log("nodemailer error => ", error)
 			console.log("==> nodemailer error.response => ", error.response)
 			res.send('error');
 

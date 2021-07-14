@@ -43,7 +43,7 @@ contactForm.addEventListener('submit', (event) => {
 		this.email = email.value;
 		this.subject = subject.value;
 		this.websiteUrl = window.location.href;
-		this.message = `${message.value} \n\n\n\n == Details ========== \nFrom: '${this.name}' \nEmail: ${this.email} \nSent through: ${this.websiteUrl}`;
+		this.message = `${message.value} \n\n\n\n == Details ========== \nFrom: '${this.name}' \nEmail: ${this.email} \nComming from: ${this.websiteUrl}`;
 	};
 
 	// console.log(formData)
