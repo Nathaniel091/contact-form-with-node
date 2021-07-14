@@ -1,4 +1,4 @@
-console.log('app.js running now')
+
 
 
 const contactForm = document.querySelector('.contact-form');
@@ -7,10 +7,11 @@ let name = document.getElementById('name');
 let email = document.getElementById('email');
 let subject = document.getElementById('subject');
 let message = document.getElementById('message');
+let submit = document.querySelector('.submit');
 
 contactForm.addEventListener('submit', (event) => {
 	event.preventDefault();
-	console.log('submitted')
+	// console.log('submitted')
 
 	// =========================TEST==================================================
 		// 
@@ -35,6 +36,7 @@ contactForm.addEventListener('submit', (event) => {
 	// 	},
 	// 	message: `${message.value} \n\n\n\n == Details ========== \nFrom: '${name.value}' \nEmail: ${email.value} \nSent From: '${this.name}'`,
 	// }
+	submit.value = "Please wait...";
 
 	const formData = new function() {
 		this.name = name.value;
@@ -46,14 +48,15 @@ contactForm.addEventListener('submit', (event) => {
 
 	// console.log(formData)
 
-	console.log('started POST request')
+	// console.log('started POST request')
 
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', '/');
 	xhr.setRequestHeader('content-type', 'application/json');
 	xhr.onload = function() {
-		console.log("xhr.responseText => ", xhr.response);
-		console.log("xhr.responseText => ", xhr.responseText);
+		// console.log("xhr.responseText => ", xhr.response);
+		// console.log("xhr.responseText => ", xhr.responseText);
+		submit.value = "Send Message";
 		if(xhr.responseText == 'success') {
 			console.log('Email Sent!');
 			console.log('Email Sent!!');
