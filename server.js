@@ -28,6 +28,8 @@ app.get('/', (req, res)=>{
 	res.sendFile(__dirname + '/public/contactform.html')
 }); 
 
+
+
 app.post('/', (req, res)=>{
 	// console.log("req.body => ", req.body)
 
@@ -37,6 +39,7 @@ app.post('/', (req, res)=>{
 	const transporter = nodemailer.createTransport({
 		service: 'gmail',
 		auth: {
+			// user: MY_EMAIL_ADDRESS1,
 			user: MY_EMAIL_ADDRESS1,
 			pass: MY_EMAIL_APP_PASSWORD1,
 		},
@@ -66,10 +69,16 @@ app.post('/', (req, res)=>{
 
 	transporter.sendMail(mailOptions, (error, info) => {
 		if(error) {
-			console.log("nodemailer error => ", error)
+			// console.log("nodemailer error => ", error)
+			console.log("==> nodemailer error.response => ", error.response)
 			res.send('error');
+
+			app.get('/public/form-error-page.html', function(req, res) {
+				res.send(`ERROR! ⛌ => ${error.response}`);
+			});
+
 		}else {
-			console.log('Email sent: > info.response ' + info.response);
+			console.log('==> Email sent: > info.response ' + info.response);
 			res.send('success');
 		};
 	});
@@ -78,8 +87,5 @@ app.post('/', (req, res)=>{
 app.listen(PORT, ()=>{
 	console.log(`==>    Server running on port ${PORT}`)
 });
-
- 
-// console.log(PORT);
 
 

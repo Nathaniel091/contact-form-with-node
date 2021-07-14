@@ -62,17 +62,18 @@ contactForm.addEventListener('submit', (event) => {
 			console.log('Email Sent!!');
 			console.log('Email Sent!!!');
 
-			alert('Email Sent!')
+			alert('Email Sent! ✔')
 
 			// name.value = '';
 			// email.value = '';
 			// subject.value = '';
 			// message.value = '';
 		} else {
-			console.log('something went wrong');
-			console.log('something went wrong \nDont worry its not your fault');
+			console.log('something went wrong ⛌ \nDont worry its not your fault');
 
-			alert('something went wrong \nDont worry its not your fault');
+			alert('Something went wrong. ⛌ \nDont worry its not your fault');
+
+			window.open('/public/errorpage.html', '_blank');
 		}
 	}
 	xhr.send(JSON.stringify(formData));
