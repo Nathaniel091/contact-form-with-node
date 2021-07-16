@@ -69,7 +69,7 @@ app.post('/', (req, res)=>{
 
 	transporter.sendMail(mailOptions, (error, info) => {
 		if(error) {
-			console.log("nodemailer error => ", error)
+			console.log("==> nodemailer error => ", error)
 			console.log("==> nodemailer error.response => ", error.response)
 			res.send('error');
 
