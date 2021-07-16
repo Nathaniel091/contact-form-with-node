@@ -58,28 +58,25 @@ contactForm.addEventListener('submit', (event) => {
 		// console.log("xhr.responseText => ", xhr.responseText);
 		submit.value = "Send Message";
 		if(xhr.responseText == 'success') {
-			console.log('Email Sent!');
-			console.log('Email Sent!!');
-			console.log('Email Sent!!!');
+			// console.log('Email Sent!');
+			// console.log('Email Sent!!');
+			// console.log('Email Sent!!!');
 
 			alert('Email Sent! ✔')
 
-			// name.value = '';
-			// email.value = '';
-			// subject.value = '';
-			// message.value = '';
+			name.value = '';
+			email.value = '';
+			subject.value = '';
+			message.value = '';
 		} else {
-			console.log('something went wrong ⛌ \nDont worry its not your fault');
+			// console.log('something went wrong');
 
-			alert('Something went wrong. ⛌ \nDont worry its not your fault');
+			alert('Something went wrong. ⛌');
 
 			window.open('/public/form-error-page.html', '_blank');
 		}
 	}
 	xhr.send(JSON.stringify(formData));
-
-
-	// console.log()
 });
 
 

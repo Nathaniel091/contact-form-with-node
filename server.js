@@ -1,7 +1,6 @@
 
 
 
-
 // ==================.env=============
 // MY_EMAIL_ADDRESS1
 // MY_EMAIL_APP_PASSWORD1
@@ -15,9 +14,9 @@ const app = express();
 
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
-// dotenv.config();
+dotenv.config();
+// dotenv.config({path: '.env'});
 // dotenv.config({ path: '/full/custom/path/to/your/env/vars' });
-dotenv.config({path: '.env'});
 
 
 const PORT = process.env.PORT || 5000;
@@ -29,7 +28,6 @@ app.use(express.json());
 app.get('/', (req, res)=>{
 	res.sendFile(__dirname + '/public/contactform.html')
 }); 
-
 
 app.post('/', (req, res)=>{
 	// console.log("req.body => ", req.body)
