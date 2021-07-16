@@ -62,7 +62,7 @@ contactForm.addEventListener('submit', (event) => {
 			// console.log('Email Sent!!');
 			// console.log('Email Sent!!!');
 
-			alert('Email Sent! ✔')
+			alert('Email Sent! ✔. Thank You!')
 
 			name.value = '';
 			email.value = '';
