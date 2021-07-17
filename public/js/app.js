@@ -64,10 +64,10 @@ contactForm.addEventListener('submit', (event) => {
 
 			alert('Email Sent! ✔. Thank You!')
 
-			name.value = '';
-			email.value = '';
-			subject.value = '';
-			message.value = '';
+			// name.value = '';
+			// email.value = '';
+			// subject.value = '';
+			// message.value = '';
 		} else {
 			// console.log('something went wrong');
 

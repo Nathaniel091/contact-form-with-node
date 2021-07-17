@@ -1,21 +1,13 @@
 
 
 
-// ==================.env=============
-// MY_EMAIL_ADDRESS1
-// MY_EMAIL_APP_PASSWORD1
-// ==================End .env=============
-
-// how to store my auth in environment variable so no one can access it
-
-
 const express = require("express");
 const app = express();
 
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 dotenv.config();
-// dotenv.config({path: '.env'});
+dotenv.config({path: '.env'});
 // dotenv.config({ path: '/full/custom/path/to/your/env/vars' });
 
 
@@ -57,34 +49,79 @@ app.post('/', (req, res)=>{
 	// });
 
 
-	const mailOptions = {
-		from: req.body.email, 
+	let mailOptions = {
+		from: req.body.email,
 		// to: 'info@business-name-here.com',
 		to: 'nathanielsamuel091@gmail.com',
 		subject: `Message from '${req.body.name}':  ${req.body.subject}.`,
 		text: `${req.body.message}`,
 	};
 
-	transporter.sendMail(mailOptions, (error, info) => {
-		if(error) {
-			console.log("==> nodemailer error => ", error)
-			console.log("==> nodemailer error.response => ", error.response)
-			res.send('error');
+	sendEmail();
+	function sendEmail() {
+		transporter.sendMail(mailOptions, (error, info) => {
+			if(error) {
+				console.log("==> nodemailer error => ", error)
+				console.log("==> nodemailer error.response => ", error.response)
+				res.send('error');
 
-			// writing to the error page
-			app.get('/public/form-error-page.html', function(req, res) {
-				res.send(`========== AN ERROR OCCURRED! ========== <br>  -----> error: ${error} <br> -----> code: ${error.code} <br> -----> command: ${error.command} <br><br><br> -----> Don't worry it's not your fault.`);
-			});
+				// writing to the error page
+				app.get('/public/form-error-page.html', function(req, res) {
+					res.send(`========== AN ERROR OCCURRED! ========== <br>  -----> error: ${error} <br> -----> code: ${error.code} <br> -----> command: ${error.command} <br><br><br> -----> Don't worry it's not your fault.`);
+				});
 
-		}else {
-			res.send('success');
-			console.log('==> Email was sent! ✔. info.response here >: ' + info.response);
-		};
-	});
+			}else {
+				res.send('success');
+				console.log('==> Email was sent! ✔. info.response here >: ' + info.response);
+				console.log('==> Starting auto-response ... ' );
+
+				autoResponse();
+			};
+
+			transporter.close();
+		});
+	}
+
+	let autoResponseData = new function() {
+		this.name = req.body.name;
+		this.email = req.body.email
+		this.subject = `Thank You`;
+		this.websiteUrl = req.body.websiteUrl;
+		this.message = `Hello '${this.name}', \nYour message was received. \nThank you for taking the time to send them across. \n\n\n\nBest wishes, \nNathaniel Samuel. \nVisit website: ${this.websiteUrl}`;
+	};
+
+	let autoResponseMailOptions = {
+		from: 'nathanielsamuel091@gmail.com',
+		to: `${autoResponseData.email}`,
+		subject: `${autoResponseData.subject}.`,
+		text: `${autoResponseData.message}`,
+	};
+
+
+	function autoResponse() {
+		// This function will send a 'Thank You' to the sender
+
+		transporter.sendMail(autoResponseMailOptions, (error, info) => {
+			if(error) {
+				// send error details to "my email" i.e autoResponseData.email
+				// res.send('error');
+				console.log("==> autoresponse nodemailer error => ", error)
+				// console.log("==> nodemailer error.response => ", error.response)
+			}else {
+				// res.send('success');
+				console.log('==> autoresponse was sent! ✔. info.response ==: ' + info.response);
+			};
+		});
+
+	}
 });
+
 
 app.listen(PORT, ()=>{
 	console.log(`==> Server running on port ${PORT}`)
 });
+
+
+
 
 
