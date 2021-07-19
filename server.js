@@ -1,3 +1,8 @@
+Change the from 'name' to 'Nathaniel Samuel'
+
+
+
+
 
 
 
@@ -12,6 +17,10 @@ dotenv.config({path: '.env'});
 
 
 const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, ()=>{
+	console.log(`==> Server running on port ${PORT}`)
+});
 
 //Middleware
 app.use(express.static('public'));
@@ -49,77 +58,79 @@ app.post('/', (req, res)=>{
 	// });
 
 
-	let mailOptions = {
-		from: req.body.email,
-		// to: 'info@business-name-here.com',
-		to: 'nathanielsamuel091@gmail.com',
-		subject: `Message from '${req.body.name}':  ${req.body.subject}.`,
-		text: `${req.body.message}`,
-	};
-
 	sendEmail();
+
 	function sendEmail() {
-		transporter.sendMail(mailOptions, (error, info) => {
-			if(error) {
-				console.log("==> nodemailer error => ", error)
-				console.log("==> nodemailer error.response => ", error.response)
-				res.send('error');
+		let mailOptions = {
+			from: req.body.email,
+			// to: 'info@business-name-here.com',
+			to: 'nathanielsamuel091@gmail.com',
+			subject: `Message from '${req.body.name}':  ${req.body.subject}.`,
+			text: `${req.body.message}`,
+		};
 
-				// writing to the error page
-				app.get('/public/form-error-page.html', function(req, res) {
-					res.send(`========== AN ERROR OCCURRED! ========== <br>  -----> error: ${error} <br> -----> code: ${error.code} <br> -----> command: ${error.command} <br><br><br> -----> Don't worry it's not your fault.`);
-				});
-
-			}else {
-				res.send('success');
-				console.log('==> Email was sent! ✔. info.response here >: ' + info.response);
-				console.log('==> Starting auto-response ... ' );
-
-				autoResponse();
-			};
-
-			transporter.close();
-		});
+		transporter.sendMail(mailOptions, transporterErrorHandlerForNormalEmail);
 	}
 
-	let autoResponseData = new function() {
-		this.name = req.body.name;
-		this.email = req.body.email
-		this.subject = `Thank You`;
-		this.websiteUrl = req.body.websiteUrl;
-		this.message = `Hello '${this.name}', \nYour message was received. \nThank you for taking the time to send them across. \n\n\n\nBest wishes, \nNathaniel Samuel. \nVisit website: ${this.websiteUrl}`;
-	};
 
-	let autoResponseMailOptions = {
-		from: 'nathanielsamuel091@gmail.com',
-		to: `${autoResponseData.email}`,
-		subject: `${autoResponseData.subject}.`,
-		text: `${autoResponseData.message}`,
-	};
+	function transporterErrorHandlerForNormalEmail(error, info) {
+		// handles error for normal email
+		
+		if(error) {
+			res.send('error');
+			console.log("==> nodemailer error => ", error)
+
+			// writing to the error page
+			app.get('/public/form-error-page.html', function(req, res) {
+				res.send(`========== AN ERROR OCCURRED! ========== <br>  -----> error: ${error} <br> -----> code: ${error.code} <br> -----> command: ${error.command} <br><br><br> -----> Don't worry it's not your fault.`);
+			});
+		}else {
+			res.send('success');
+
+			console.log('==> Email was sent! ✔. info.response here ==>: ' + info.response);
+			console.log('==> Starting auto-response ... ' );
+
+			
+			autoResponse();
+		};
+	}
 
 
 	function autoResponse() {
 		// This function will send a 'Thank You' to the sender
 
-		transporter.sendMail(autoResponseMailOptions, (error, info) => {
-			if(error) {
-				// send error details to "my email" i.e autoResponseData.email
-				// res.send('error');
-				console.log("==> autoresponse nodemailer error => ", error)
-				// console.log("==> nodemailer error.response => ", error.response)
-			}else {
-				// res.send('success');
-				console.log('==> autoresponse was sent! ✔. info.response ==: ' + info.response);
-			};
-		});
+		let autoResponseData = new function() {
+			this.name = req.body.name;
+			this.email = req.body.email
+			this.subject = `Thank You`;
+			this.websiteUrl = req.body.websiteUrl;
+			this.message = `Hello '${this.name}', \nYour message was received. \nThank you for taking the time to send them across. \n\n\n\nBest wishes, \nNathaniel Samuel (Web developer). \nVisit website: ${this.websiteUrl}`;
+		};
 
+		let autoResponseMailOptions = {
+			from: 'nathanielsamuel091@gmail.com',
+			to: `${autoResponseData.email}`,
+			subject: `${autoResponseData.subject}.`,
+			text: `${autoResponseData.message}`,
+		};
+
+		// transporter.sendMail(mailOptions, transporterErrorHandlerForAutoresponseEmail);
+		transporter.sendMail(autoResponseMailOptions, transporterErrorHandlerForAutoresponseEmail);
 	}
+
+
+	function transporterErrorHandlerForAutoresponseEmail(error, info) {
+		// handles error for autoresponse email
+		if(error) {
+			console.log("==> autoresponse failed! => ", error)
+		}else {
+			console.log('==> autoresponse was sent! ✔. info.response here ==>: ' + info.response);
+		};
+	};
 });
 
 
-app.listen(PORT, ()=>{
-	console.log(`==> Server running on port ${PORT}`)
-});
+
 
 
 
